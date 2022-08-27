@@ -1,3 +1,47 @@
+const data = {
+  data: {
+    incidents: [
+      {
+        id: 1,
+        codeName: "Incident A",
+        loc: {
+          x: 18,
+          y: 8,
+        },
+        officerID: 1,
+      },
+      {
+        id: 2,
+        codeName: "Incident B",
+        loc: {
+          x: 28,
+          y: 16,
+        },
+        officerID: 2,
+      },
+    ],
+    officers: [
+      {
+        id: 1,
+        badgeName: "Hieu",
+        loc: {
+          x: 50,
+          y: 35,
+        },
+      },
+      {
+        id: 2,
+        badgeName: "Hung",
+        loc: {
+          x: 10,
+          y: 20,
+        },
+      },
+    ],
+  },
+  error: null,
+};
+
 const WIDTH = 1200;
 const HEIGHT = 800;
 
@@ -17,7 +61,7 @@ const app = new PIXI.Application({
   backgroundColor: 0x000000,
 });
 
-document.getElementById('app').appendChild(app.view);
+document.getElementById("app").appendChild(app.view);
 
 function drawMap() {
   const graphics = new PIXI.Graphics();
@@ -91,14 +135,8 @@ function drawAssignLines(incidents, officers) {
 
   incidents.forEach((incident) => {
     const officer = officers.find((o) => o.id === incident.officerId);
-    graphics.moveTo(
-      incident.loc.x * UNIT_WIDTH,
-      incident.loc.y * UNIT_HEIGHT
-    );
-    graphics.lineTo(
-      officer.loc.x,
-      officer.loc.y
-    );
+    graphics.moveTo(incident.loc.x * UNIT_WIDTH, incident.loc.y * UNIT_HEIGHT);
+    graphics.lineTo(officer.loc.x, officer.loc.y);
   });
 
   app.stage.addChild(graphics);
@@ -122,7 +160,7 @@ function start() {
   });
 
   loop();
-  setInterval(loop, 5000);
+  setInterval(loop, 2000);
 }
 
 async function loop() {
@@ -142,20 +180,39 @@ async function loop() {
     console.error(err);
   }
 }
-
+//
 const sampleIncidents = [
   { id: 1, codeName: "IC1", loc: { x: 5, y: 10 }, officerId: 1 },
   { id: 2, codeName: "IC2", loc: { x: 15, y: 20 }, officerId: 3 },
   { id: 3, codeName: "IC3", loc: { x: 25, y: 20 }, officerId: 2 },
 ];
-
+// Officers
 const sampleOfficers = [
   { id: 1, badgeName: "OF1", loc: { x: 8, y: 12 } },
   { id: 2, badgeName: "OF2", loc: { x: 19, y: 20 } },
   { id: 3, badgeName: "OF3", loc: { x: 10, y: 20 } },
 ];
 
+function callApi() {
+  fetch("http://localhost:9000/api/v1/state", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    mode: "no-cors",
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => console.log(data));
+}
+
 async function loadData() {
+  callApi();
+  // fetch("http://localhost:9000/api/v1/state").then((res) => {
+  //   console.log(JSON.parse(res));
+  // });
   return {
     data: {
       incidents: sampleIncidents,

@@ -11,7 +11,7 @@ var amqp = require('amqplib/callback_api')
 const RABBIT_MQ_HOST = "amqp://localhost:5672"
 const QUEUE_NAME="events"
 
-// 
+//
 var DATA
 
 amqp.connect(RABBIT_MQ_HOST, function(error0, connection) {
@@ -57,10 +57,10 @@ app.get('/api/v1/state', (req, res) => {
           codeName: "Incident A",
           loc: {
             x: 18,
-            y: 8
+            y: 8,
           },
-          officerId: 1
-        }
+          officerId: 1,
+        },
       ],
       officers: [
         {
@@ -68,8 +68,8 @@ app.get('/api/v1/state', (req, res) => {
           badgeName: "Minh 1",
           loc: {
             x: 50,
-            y: 35
-          }
+            y: 35,
+          },
         },
         {
           id: 2,
@@ -89,19 +89,3 @@ app.get('/api/v1/state', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-
-function calculateDistance(point1, point2) {
-  return Math.sqrt(((point2.x - point1.x) ** 2) + ((point2.y - point1.y) ** 2))
-}
-
-function officerActive(officer) {
-  officerList.push(officer)
-}
-
-function officerDeactive(officer) {
-  officerList.splice(officerList.find(officer), 1)
-}
-
-function incidentResolved(incident) {
-
-}
