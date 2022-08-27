@@ -9,7 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "express": "^4.18.1",
     "fastpriorityqueue": "^0.7.2"
+=======
+    "amqplib": "^0.10.2",
+    "express": "^4.18.1"
+>>>>>>> 3eba5dcefe36f8da7a7cfd9d0684b2de239ac3b0
   }
 }
