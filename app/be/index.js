@@ -11,6 +11,9 @@ var amqp = require('amqplib/callback_api')
 const RABBIT_MQ_HOST = "amqp://localhost:5672"
 const QUEUE_NAME="events"
 
+// 
+var DATA
+
 amqp.connect(RABBIT_MQ_HOST, function(error0, connection) {
     console.log("AOH7","Set up Rabbitmq connection...")
     if (error0) {
@@ -32,6 +35,11 @@ amqp.connect(RABBIT_MQ_HOST, function(error0, connection) {
 
                 console.log(" [x] Received %s", msg.content.toString());
 
+                // exc
+                DATA = msg.content.toString()
+
+                var jsonData = JSON.parse(DATA)
+                console.log(jsonData)
             }, {
             noAck: true
         })
